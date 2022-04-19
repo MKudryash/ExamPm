@@ -145,55 +145,42 @@ namespace ExamPm.Pattern
 
         private void AddBookBasketBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs("IsEnableBookAdd"));
 
 
-            if (Book!=null&&bookss.Single(x => x == Book).CountMarket > 0 || bookss.Single(x => x == Book).CountStock > 0)
+            try
             {
-                if (!basketStructure.Any(x => x.BookBasket == Book))
+                if (bookss.Single(x => x == Book).CountMarket > 0 || bookss.Single(x => x == Book).CountStock > 0)
                 {
-                   BasketStructure order = new BasketStructure() { BookBasket = Book };
-                    if (Book.CountMarket != order.CountBook && Book.CountMarket > 0)
+                    if (!basketStructure.Any(x => x.BookBasket == Book))
                     {
-                        order.CountBook++;
-                        order.CountMarket++;
-                        PriceOrder += Convert.ToInt32( Book.Price);
-                        CountBookBasket = basketStructure.Count();
-                        PropertyChanged(this, new PropertyChangedEventArgs("PriceOrder"));
-                        PropertyChanged(this, new PropertyChangedEventArgs("CountBookBasket"));
-                        PropertyChanged(this, new PropertyChangedEventArgs("DiscountUser"));
-                        PropertyChanged(this, new PropertyChangedEventArgs("discointHave"));
-                    }
-                    else
-                    {
-                        if (Book.CountStock != order.CountBook && Book.CountStock > 0)
+                        BasketStructure order = new BasketStructure() { BookBasket = Book };
+                        if (Book.CountMarket != order.CountBook && Book.CountMarket > 0)
                         {
                             order.CountBook++;
-                            order.CountStock++;
+                            order.CountMarket++;
                             PriceOrder += Convert.ToInt32(Book.Price);
                             CountBookBasket = basketStructure.Count();
                             PropertyChanged(this, new PropertyChangedEventArgs("PriceOrder"));
                             PropertyChanged(this, new PropertyChangedEventArgs("CountBookBasket"));
                             PropertyChanged(this, new PropertyChangedEventArgs("DiscountUser"));
                             PropertyChanged(this, new PropertyChangedEventArgs("discointHave"));
-
                         }
-                    }
-                    basketStructure.Add(order);
-                    CountBookBasket = basketStructure.Count();
-                    PropertyChanged(this, new PropertyChangedEventArgs("PriceOrder"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("CountBookBasket"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("DiscountUser"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("discointHave"));
-                }
-                else
-                {
-                    BasketStructure selectBook = basketStructure.Single(x => x.BookBasket == Book);
-                    if (Book.CountMarket != selectBook.CountBook && Book.CountMarket > 0)
-                    {
-                        selectBook.CountBook++;
-                        selectBook.CountMarket++;
-                        PriceOrder += Convert.ToInt32(Book.Price);
+                        else
+                        {
+                            if (Book.CountStock != order.CountBook && Book.CountStock > 0)
+                            {
+                                order.CountBook++;
+                                order.CountStock++;
+                                PriceOrder += Convert.ToInt32(Book.Price);
+                                CountBookBasket = basketStructure.Count();
+                                PropertyChanged(this, new PropertyChangedEventArgs("PriceOrder"));
+                                PropertyChanged(this, new PropertyChangedEventArgs("CountBookBasket"));
+                                PropertyChanged(this, new PropertyChangedEventArgs("DiscountUser"));
+                                PropertyChanged(this, new PropertyChangedEventArgs("discointHave"));
+
+                            }
+                        }
+                        basketStructure.Add(order);
                         CountBookBasket = basketStructure.Count();
                         PropertyChanged(this, new PropertyChangedEventArgs("PriceOrder"));
                         PropertyChanged(this, new PropertyChangedEventArgs("CountBookBasket"));
@@ -202,20 +189,41 @@ namespace ExamPm.Pattern
                     }
                     else
                     {
-                        if (Book.CountStock != selectBook.CountBook && Book.CountStock > 0)
+                        BasketStructure selectBook = basketStructure.Single(x => x.BookBasket == Book);
+                        if (Book.CountMarket != selectBook.CountBook && Book.CountMarket > 0)
                         {
                             selectBook.CountBook++;
-                            selectBook.CountStock++;
+                            selectBook.CountMarket++;
                             PriceOrder += Convert.ToInt32(Book.Price);
                             CountBookBasket = basketStructure.Count();
                             PropertyChanged(this, new PropertyChangedEventArgs("PriceOrder"));
                             PropertyChanged(this, new PropertyChangedEventArgs("CountBookBasket"));
                             PropertyChanged(this, new PropertyChangedEventArgs("DiscountUser"));
                             PropertyChanged(this, new PropertyChangedEventArgs("discointHave"));
+                        }
+                        else
+                        {
+                            if (Book.CountStock != selectBook.CountBook && Book.CountStock > 0)
+                            {
+                                selectBook.CountBook++;
+                                selectBook.CountStock++;
+                                PriceOrder += Convert.ToInt32(Book.Price);
+                                CountBookBasket = basketStructure.Count();
+                                PropertyChanged(this, new PropertyChangedEventArgs("PriceOrder"));
+                                PropertyChanged(this, new PropertyChangedEventArgs("CountBookBasket"));
+                                PropertyChanged(this, new PropertyChangedEventArgs("DiscountUser"));
+                                PropertyChanged(this, new PropertyChangedEventArgs("discointHave"));
+                            }
                         }
                     }
                 }
             }
+            catch (Exception)
+            {
+
+                //
+            }
+           
         }
 
      

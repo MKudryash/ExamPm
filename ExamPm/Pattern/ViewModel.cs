@@ -113,6 +113,7 @@ namespace ExamPm.Pattern
         public RoutedCommand EndOrderCommand { get; } = new RoutedCommand();
         public CommandBinding EndOrderBinding;
 
+
         public ViewModel()
         {
             AddBookBasketBinding = new CommandBinding(AddBookBasketCommand);

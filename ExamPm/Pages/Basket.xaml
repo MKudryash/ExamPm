@@ -59,6 +59,7 @@
             <Button Content="Добавить книгу" />
             <Button Content="Удалить книгу"/>
             <Button Content="Оформить заказ" Command="{Binding EndOrderCommand}"/>
+            <Button Content="Удалить все" Command="{Binding EndOrderCommand}" />
         </StackPanel>
 
         <ListBox Grid.Row="1"

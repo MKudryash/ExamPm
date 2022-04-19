@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExamPm.FolderClass;
+using ExamPm.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,8 @@ namespace ExamPm
         public MainWindow()
         {
             InitializeComponent();
+            frmMain.Navigate(new MainBook());
+            LoadPages.MainFrame = frmMain;
         }
     }
 }

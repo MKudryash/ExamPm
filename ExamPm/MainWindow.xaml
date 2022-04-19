@@ -16,13 +16,14 @@
             <ColumnDefinition Width="657*"/>
         </Grid.ColumnDefinitions>
         
-        <TextBlock Grid.Column="1" 
+        <TextBlock Grid.Row="0"
                    Text="Книжный магазин" 
                    FontFamily="Comic Sans MC"
                    FontSize="50" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        <Frame Name="frmMain" 
+        <Frame Grid.Row="1"
+            Name="frmMain" 
                NavigationUIVisibility="Hidden" 
                />
     </Grid>

@@ -11,10 +11,10 @@
     <Page.Resources>
         <Style TargetType="TextBlock" x:Key="HaveDiscoiunt">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding }" Value="True">
+                <DataTrigger Binding="{Binding discointHave}" Value="True">
                     <Setter Property="TextDecorations" Value="Strikethrough"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding }" Value="False">
+                <DataTrigger Binding="{Binding discointHave}" Value="False">
                     <Setter Property="TextDecorations" Value="None"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -23,7 +23,7 @@
         <DataTemplate x:Key="Book">
             <StackPanel >
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="250" Height="250" Source="{Binding }"/>
+                    <Image Width="250" Height="250" Source="{Binding GetImage}"/>
                     <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Название: "/>
@@ -39,15 +39,15 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Количество в магазине: "/>
-                            <TextBlock Text="{Binding CountMarket}"/>
+                            <TextBlock Text="{Binding CountMatrket}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Количество на складе: "/>
-                            <TextBlock Text="{Binding CountStock}"/>
+                            <TextBlock Text="{Binding CountStocks}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Описание: "/>
-                            <TextBlock Text="{Binding Description}"/>
+                            <TextBlock TextWrapping="Wrap" Height="80" Width="800" Text="{Binding Description}"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
@@ -59,26 +59,33 @@
             <RowDefinition Height="65"/>
             <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
-        <!--<Border Width="230" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="Black">
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Посмотреть содержание корзины" Click="OpenBasket"/>
+            <Button IsEnabled="{Binding isEnableBookAdd}" Content="Добавить в коризну" Command="{Binding AddBookBasketCommand}"/>
+            
+        </StackPanel>
+
+            <Border Width="230" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="Black">
             <StackPanel Margin="5" Width="210" Orientation="Vertical" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Количество выбранных книг: "/>
-                    <TextBlock Text="{Binding }"/>
+                    <TextBlock Text="{Binding CountBookBasket}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Стоимость покупки: "/>
-                    <TextBlock Style="{StaticResource HaveDiscoiunt}" Text="{Binding }"/>
-                    <TextBlock Text="{Binding }"/>
+                    <TextBlock Style="{StaticResource HaveDiscoiunt}" Text="{Binding PriceOrder}"/>
+                    <TextBlock Text="{Binding priceOrderTwo}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Размер скидки: "/>
-                    <TextBlock Text="{Binding }"/>
+                    <TextBlock Text="{Binding DiscountUser}"/>
                     <TextBlock Text=" %"/>
                 </StackPanel>
             </StackPanel>
-        </Border>-->
+        </Border>
         <ListBox Grid.Row="1"
-
+SelectedItem="{Binding Book}"
 ItemsSource="{Binding GetBooks}"
 ItemTemplate="{StaticResource Book}" Grid.RowSpan="2" />
 

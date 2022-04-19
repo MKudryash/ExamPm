@@ -15,7 +15,26 @@ namespace ExamPm.FolderClass
                 if (Cover == "")
                     return "";
                 else
-                    return Environment.CurrentDirectory + Cover;
+                    return Environment.CurrentDirectory +"\\"+ Cover;
+            }
+        }
+
+        public string CountMatrket
+        {
+            get
+            {
+                if (CountMarket == 0) return "Нет";
+                if (CountMarket > 5) return "Много";
+                return CountMarket.ToString();
+            }
+        }
+        public string CountStocks
+        {
+            get
+            {
+                if (CountStock == 0) return "Нет";
+                if (CountStock > 5) return "Много";
+                return CountStock.ToString();
             }
         }
     }

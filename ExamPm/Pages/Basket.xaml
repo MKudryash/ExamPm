@@ -8,7 +8,62 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Basket">
 
+    <Page.Resources>
+
+        <Style TargetType="TextBlock" x:Key="HaveDiscoiunt">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding }" Value="True">
+                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding }" Value="False">
+                    <Setter Property="TextDecorations" Value="None"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="Basket">
+            <StackPanel >
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="250" Height="250" Source="{Binding BookBasket.GetImage}"/>
+                    <StackPanel Margin="10,0,0,0" Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Название: "/>
+                            <TextBlock Text="{Binding BookBasket.Title}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Автор: "/>
+                            <TextBlock Text="{Binding BookBasket.Author}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Количество: "/>
+                            <TextBlock Text="{Binding CountBook}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Цена: "/>
+                            <TextBlock Style="{StaticResource HaveDiscoiunt}" Text="{Binding BookBasket.Price}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
     <Grid>
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="13*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Вернуться к покупкам" Click="ReturnShop"/>
+            <Button Content="Добавить книгу" />
+            <Button Content="Удалить книгу"/>
+            <Button Content="Оформить заказ" Command="{Binding EndOrderCommand}"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="1"
+
+ItemsSource="{Binding GetBasket}"
+ItemTemplate="{StaticResource Basket}" Grid.RowSpan="2" />
     </Grid>
 </Page>

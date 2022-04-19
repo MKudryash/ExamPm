@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExamPm.FolderClass;
+using ExamPm.Pattern;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,17 @@ namespace ExamPm.Pages
     /// </summary>
     public partial class Basket : Page
     {
-        public Basket()
+       // ViewModel viewModel = new ViewModel();
+        public Basket(ViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
+            CommandBindings.Add(viewModel.EndOrderBinding);
+        }
+
+        private void ReturnShop(object sender, RoutedEventArgs e)
+        {
+            LoadPages.MainFrame.GoBack();
         }
     }
 }

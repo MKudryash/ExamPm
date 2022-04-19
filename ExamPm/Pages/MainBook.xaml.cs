@@ -1,4 +1,5 @@
-﻿using ExamPm.Pattern;
+﻿using ExamPm.FolderClass;
+using ExamPm.Pattern;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,12 @@ namespace ExamPm.Pages
         {
             InitializeComponent();
             DataContext = viewModel;
+            CommandBindings.Add(viewModel.AddBookBasketBinding);
+        }
+
+        private void OpenBasket(object sender, RoutedEventArgs e)
+        {
+            LoadPages.MainFrame.Navigate(new Basket(viewModel));
         }
     }
 }

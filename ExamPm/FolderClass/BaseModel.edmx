@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище P_MamshevaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище P_MamshevaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BookOrder">
           <Key>
             <PropertyRef Name="ID" />
@@ -21,7 +21,7 @@
           <Property Name="Title" Type="nvarchar" MaxLength="50" />
           <Property Name="Genre" Type="nvarchar" MaxLength="50" />
           <Property Name="Author" Type="nvarchar" MaxLength="50" />
-          <Property Name="Price" Type="nchar" MaxLength="10" />
+          <Property Name="Price" Type="int" />
           <Property Name="CountMarket" Type="int" />
           <Property Name="CountStock" Type="int" />
           <Property Name="Description" Type="nvarchar(max)" />
@@ -76,10 +76,21 @@
             <End Role="BookOrder" EntitySet="BookOrder" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="P_MamshevaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BookOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="IdBook" Type="Int32" />
+          <Property Name="IdOrder" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_BookOrder_Books" FromRole="BookOrder" ToRole="Books" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_BookOrder_Order" FromRole="BookOrder" ToRole="Order" />
+        </EntityType>
         <EntityType Name="Books">
           <Key>
             <PropertyRef Name="IdBook" />
@@ -88,12 +99,12 @@
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Int32" />
           <Property Name="CountMarket" Type="Int32" />
           <Property Name="CountStock" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Cover" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BookOrder" Relationship="P_MamshevaModel.FK_BookOrder_Books" FromRole="Books" ToRole="BookOrder" />
+          <NavigationProperty Name="BookOrder" Relationship="Self.FK_BookOrder_Books" FromRole="Books" ToRole="BookOrder" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -106,34 +117,11 @@
           <Property Name="CountBook" Type="Int32" />
           <Property Name="Price" Type="Int32" />
           <Property Name="Discount" Type="Int32" />
-          <NavigationProperty Name="BookOrder" Relationship="P_MamshevaModel.FK_BookOrder_Order" FromRole="Order" ToRole="BookOrder" />
-        </EntityType>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Books" EntityType="Self.Books" />
-          <EntitySet Name="Order" EntityType="Self.Order" />
-          <EntitySet Name="BookOrder" EntityType="P_MamshevaModel.BookOrder" />
-          <AssociationSet Name="FK_BookOrder_Books" Association="P_MamshevaModel.FK_BookOrder_Books">
-            <End Role="Books" EntitySet="Books" />
-            <End Role="BookOrder" EntitySet="BookOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BookOrder_Order" Association="P_MamshevaModel.FK_BookOrder_Order">
-            <End Role="Order" EntitySet="Order" />
-            <End Role="BookOrder" EntitySet="BookOrder" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="BookOrder">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="IdBook" Type="Int32" />
-          <Property Name="IdOrder" Type="Int32" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="P_MamshevaModel.FK_BookOrder_Books" FromRole="BookOrder" ToRole="Books" />
-          <NavigationProperty Name="Order" Relationship="P_MamshevaModel.FK_BookOrder_Order" FromRole="BookOrder" ToRole="Order" />
+          <NavigationProperty Name="BookOrder" Relationship="Self.FK_BookOrder_Order" FromRole="Order" ToRole="BookOrder" />
         </EntityType>
         <Association Name="FK_BookOrder_Books">
-          <End Type="P_MamshevaModel.Books" Role="Books" Multiplicity="0..1" />
-          <End Type="P_MamshevaModel.BookOrder" Role="BookOrder" Multiplicity="*" />
+          <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
+          <End Role="BookOrder" Type="Self.BookOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Books">
               <PropertyRef Name="IdBook" />
@@ -144,8 +132,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BookOrder_Order">
-          <End Type="P_MamshevaModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="P_MamshevaModel.BookOrder" Role="BookOrder" Multiplicity="*" />
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="BookOrder" Type="Self.BookOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
               <PropertyRef Name="IdOrder" />
@@ -155,12 +143,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BookOrder" EntityType="Self.BookOrder" />
+          <EntitySet Name="Books" EntityType="Self.Books" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <AssociationSet Name="FK_BookOrder_Books" Association="Self.FK_BookOrder_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BookOrder" EntitySet="BookOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookOrder_Order" Association="Self.FK_BookOrder_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="BookOrder" EntitySet="BookOrder" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище P_MamshevaModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="BookOrder">
+            <EntityTypeMapping TypeName="P_MamshevaModel.BookOrder">
+              <MappingFragment StoreEntitySet="BookOrder">
+                <ScalarProperty Name="IdBook" ColumnName="IdBook" />
+                <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="P_MamshevaModel.Books">
               <MappingFragment StoreEntitySet="Books">
@@ -186,15 +196,6 @@
                 <ScalarProperty Name="CountBook" ColumnName="CountBook" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BookOrder">
-            <EntityTypeMapping TypeName="P_MamshevaModel.BookOrder">
-              <MappingFragment StoreEntitySet="BookOrder">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
-                <ScalarProperty Name="IdBook" ColumnName="IdBook" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

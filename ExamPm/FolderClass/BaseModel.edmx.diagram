@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f014a7a152de45859cc5c5a199a88773" Name="Diagram1">
-        <EntityTypeShape EntityType="P_MamshevaModel.Books" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="P_MamshevaModel.Order" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="P_MamshevaModel.BookOrder" Width="1.5" PointX="5" PointY="1.25" />
-        <AssociationConnector Association="P_MamshevaModel.FK_BookOrder_Books" />
-        <AssociationConnector Association="P_MamshevaModel.FK_BookOrder_Order" />
+      <Diagram DiagramId="765f2e066f204c4d91f9882ba1d4ec99" Name="Diagram1">
+        <EntityTypeShape EntityType="P_MamshevaModel.BookOrder" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="P_MamshevaModel.Books" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="P_MamshevaModel.Order" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="P_MamshevaModel.FK_BookOrder_Books" ManuallyRouted="false" />
+        <AssociationConnector Association="P_MamshevaModel.FK_BookOrder_Order" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

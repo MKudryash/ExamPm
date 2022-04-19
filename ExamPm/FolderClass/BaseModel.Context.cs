@@ -25,8 +25,8 @@ namespace ExamPm.FolderClass
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<BookOrder> BookOrder { get; set; }
         public virtual DbSet<Books> Books { get; set; }
         public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<BookOrder> BookOrder { get; set; }
     }
 }
